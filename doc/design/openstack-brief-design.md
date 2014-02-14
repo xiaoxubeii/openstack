@@ -1,7 +1,7 @@
 ## Conceptual architecture ##
 
 
-----------
+***
 
 
 The architecture includes 4 parts, there are Controller, Compute, Network and Share Storage.
@@ -21,12 +21,12 @@ The Share Storage runs the storage service for such as compute, block storage, i
 ## Physical architecture ##
 
 
-----------
+***
 
 
 ## Service architecture ##
 
 
-----------
+***
 
 
