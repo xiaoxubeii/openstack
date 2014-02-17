@@ -1,6 +1,6 @@
 ## LibvirtDriver创建connection过程 ##
 
-在nova.virt.libvirt.driver中，LibvirtDriver是Nova Compute的驱动，通过Libvirt管理虚拟机。
+在nova.virt.libvirt.driver中，LibvirtDriver是Nova Compute的驱动，通过Libvirt管理虚拟机。  
 首先看连接过程：
 
     def _get_connection(self):
@@ -83,7 +83,7 @@
                                               payload)
             raise exception.HypervisorUnavailable(host=CONF.host)
             
-看tpool.proxy_call()，查eventlet的源码可知，这个函数是用来生成一个naive thread，并将返回值进行wrap。
+看tpool.proxy_call()，查eventlet的源码可知，这个函数是用来生成一个naive thread，并将返回值进行wrap。  
 在eventlet/eventlet/tpool.py里：
 
     def proxy_call(autowrap, f, *args, **kwargs):
@@ -106,7 +106,7 @@
         return Proxy(rv, autowrap)
     else:
         return rv
-看注释可知，参数autowrap是要包装的值，f是执行的函数，*args是f的参数，**kwargs是keyword argument，比如"nonblocking"。
+看注释可知，参数autowrap是要包装的值，f是执行的函数，\*args是f的参数，**kwargs是keyword argument，比如"nonblocking"。  
 结合_connect()中的代码：
 
     @staticmethod
@@ -114,7 +114,7 @@
         ...
         return tpool.proxy_call((libvirt.virDomain, libvirt.virConnect), libvirt.openAuth, uri, auth, flags)
     
-意思就是说，开启一个新的naive thread来执行libvirt.openAuth，并将返回的类型为(libvirt.virDomain, libvirt.virtConnect)的值包装起来。
+意思就是说，开启一个新的naive thread来执行libvirt.openAuth，并将返回的类型为(libvirt.virDomain, libvirt.virtConnect)的值包装起来。  
 
 然后通过_conn即可通过libvirt来管理虚拟机，比如：
 
